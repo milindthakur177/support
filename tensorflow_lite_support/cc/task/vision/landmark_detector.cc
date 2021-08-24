@@ -138,7 +138,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 
   //const  int num_keypoints = output_tensors[0]->dims->data[2];
   const int num_keypoints =
-      static_cast<int>(AssertAndReturnTypedTensor<float>(output_tensors[0])[2]);
+      AssertAndReturnTypedTensor<float>(output_tensors[0])[2];
   const float* outputs = AssertAndReturnTypedTensor<float>(output_tensors[0]);
 	
   LandmarkResult result;
