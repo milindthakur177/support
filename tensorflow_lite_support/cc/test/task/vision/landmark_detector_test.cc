@@ -114,9 +114,8 @@ TEST_F(CreateFromOptionsTest, FailsWithMissingModel) {
 
   EXPECT_EQ(landmark_detector_or.status().code(),
             absl::StatusCode::kInvalidArgument);
-  EXPECT_THAT(landmark_detector_or.status().GetPayload(kTfLiteSupportPayload),
-              Optional(absl::Cord(
-                  absl::StrCat(TfLiteSupportStatus::kInvalidArgumentError))));
+  EXPECT_THAT(landmark_detector_or.status().message(),
+              HasSubstr("Missing mandatory `model_file` field in `base_options`"));
 }
 
 
