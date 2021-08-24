@@ -65,8 +65,6 @@ StatusOr<ImageData> LoadImage(std::string image_name) {
 class MobileNetV3OpResolver : public ::tflite::MutableOpResolver {
  public:
   MobileNetV3OpResolver() {
-    AddBuiltin(::tflite::BuiltinOperator_MUL,
-               ::tflite::ops::builtin::Register_MUL());
     AddBuiltin(::tflite::BuiltinOperator_SUB,
                ::tflite::ops::builtin::Register_SUB());
     AddBuiltin(::tflite::BuiltinOperator_CONV_2D,
