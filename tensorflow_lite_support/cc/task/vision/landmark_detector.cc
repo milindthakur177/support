@@ -119,7 +119,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
         absl::StrFormat("Expected 1 output tensors, found %d",
                         output_tensors.size()));
   }
-  if (output_tensor->dims->data[2] != 17) {
+  if (output_tensors[0]->dims->data[2] != 17) {
     return CreateStatusWithPayload(
         StatusCode::kInternal,
         absl::StrFormat("Expected 17 shape, found %d",
