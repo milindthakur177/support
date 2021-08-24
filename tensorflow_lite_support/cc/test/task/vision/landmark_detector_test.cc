@@ -1,4 +1,4 @@
-/* Copyright 2020 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2021 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -103,7 +103,23 @@ StatusOr<ImageData> LoadImage(std::string image_name) {
                                       kTestDataDirectory, image_name));
 }
 
+class CreateFromOptionsTest : public tflite_shims::testing::Test {};
 
+
+TEST_F(CreateFromOptionsTest, FailsWithMissingModel) {
+  LandmarkDetectorOptions options;
+
+  StatusOr<std::unique_ptr<LandmarkDetector>> landmark_detector_or =
+      LandmarkDetector::CreateFromOptions(options);
+
+  EXPECT_EQ(landmark_detector_or.status().code(),
+            absl::StatusCode::kInvalidArgument);
+  EXPECT_THAT(landmark_detector_or.status().message(),
+              HasSubstr("Missing mandatory `model_file` field in `base_options`"));
+  EXPECT_THAT(landmark_detector_or.status().GetPayload(kTfLiteSupportPayload),
+              Optional(absl::Cord(
+                  absl::StrCat(TfLiteSupportStatus::kInvalidArgumentError))));
+}
 
 class DetectTest : public tflite_shims::testing::Test {};
 
