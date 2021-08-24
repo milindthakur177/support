@@ -123,7 +123,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
     return CreateStatusWithPayload(
         StatusCode::kInternal,
         absl::StrFormat("Expected 17 shape, found %d",
-                        output_tensor->dims->data[2]));
+                        output_tensors[0]->dims->data[2]));
   }
 
   const TfLiteTensor* output_tensor = output_tensors[0];
