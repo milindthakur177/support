@@ -63,7 +63,7 @@ StatusOr<std::unique_ptr<LandmarkDetector>> LandmarkDetector::CreateFromOptions(
     ASSIGN_OR_RETURN(landmark_detector,
                      TaskAPIFactory::CreateFromBaseOptions<LandmarkDetector>(
                          &options_copy->base_options()));
-  }
+  } 
 
   RETURN_IF_ERROR(landmark_detector->Init(std::move(options_copy)));
 
