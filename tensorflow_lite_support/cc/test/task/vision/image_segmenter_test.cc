@@ -105,6 +105,8 @@ class DeepLabOpResolver : public ::tflite::MutableOpResolver {
   DeepLabOpResolver() {
     AddBuiltin(::tflite::BuiltinOperator_ADD,
                ::tflite::ops::builtin::Register_ADD());
+    AddBuiltin(::tflite::BuiltinOperator_AVERAGE_POOL_2D,
+               ::tflite::ops::builtin::Register_AVERAGE_POOL_2D());
     AddBuiltin(::tflite::BuiltinOperator_CONCATENATION,
                ::tflite::ops::builtin::Register_CONCATENATION());
     AddBuiltin(::tflite::BuiltinOperator_CONV_2D,

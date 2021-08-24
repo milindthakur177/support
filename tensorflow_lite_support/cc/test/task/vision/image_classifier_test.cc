@@ -75,6 +75,8 @@ StatusOr<ImageData> LoadImage(std::string image_name) {
 class MobileNetQuantizedOpResolver : public ::tflite::MutableOpResolver {
  public:
   MobileNetQuantizedOpResolver() {
+    AddBuiltin(::tflite::BuiltinOperator_AVERAGE_POOL_2D,
+               ::tflite::ops::builtin::Register_AVERAGE_POOL_2D());
     AddBuiltin(::tflite::BuiltinOperator_CONV_2D,
                ::tflite::ops::builtin::Register_CONV_2D());
     AddBuiltin(::tflite::BuiltinOperator_DEPTHWISE_CONV_2D,
