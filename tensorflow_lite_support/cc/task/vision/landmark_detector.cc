@@ -136,9 +136,8 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
     const FrameBuffer& /*frame_buffer*/, const BoundingBox& /*roi*/) {
   RETURN_IF_ERROR(SanityCheckOutputTensors(output_tensors));
 
-  const TfLiteTensor* output_tensor = output_tensors[0];
-  const  int num_keypoints = output_tensor->dims->data[2];
-  const float* outputs = AssertAndReturnTypedTensor<float>(output_tensor);
+  const  int num_keypoints = output_tensors[0]->dims->data[2];
+  const float* outputs = AssertAndReturnTypedTensor<float>(output_tensor[0]);
 	
   LandmarkResult result;
 
