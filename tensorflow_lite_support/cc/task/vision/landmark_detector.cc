@@ -49,8 +49,6 @@ using ::tflite::task::core::TfLiteEngine;
 
 }  // namespace
 
-// Number of Keypoints
-int num_keypoints = 17;
 
 /* static */
 StatusOr<std::unique_ptr<LandmarkDetector>> LandmarkDetector::CreateFromOptions(
@@ -130,6 +128,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
   }
 
   const TfLiteTensor* output_tensor = output_tensors[0];
+  int num_keypoints = output_tensor->dims->data[2] 
 
   const float* outputs = AssertAndReturnTypedTensor<float>(output_tensor);
 	
