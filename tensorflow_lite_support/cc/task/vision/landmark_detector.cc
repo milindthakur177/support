@@ -119,6 +119,12 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
         absl::StrFormat("Expected 1 output tensors, found %d",
                         output_tensors.size()));
   }
+  if (output_tensor->dims->data[2] != 17) {
+    return CreateStatusWithPayload(
+        StatusCode::kInternal,
+        absl::StrFormat("Expected 17 shape, found %d",
+                        output_tensor->dims->data[2]));
+  }
 
   const TfLiteTensor* output_tensor = output_tensors[0];
   int num_keypoints = output_tensor->dims->data[2];
