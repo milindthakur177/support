@@ -128,7 +128,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
   }
 
   const TfLiteTensor* output_tensor = output_tensors[0];
-  int num_keypoints = output_tensor->dims->data[2] 
+  int num_keypoints = output_tensor->dims->data[2];
 
   const float* outputs = AssertAndReturnTypedTensor<float>(output_tensor);
 	
