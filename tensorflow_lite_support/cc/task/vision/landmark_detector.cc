@@ -77,6 +77,27 @@ absl::Status LandmarkDetector::SanityCheckOptions(
   return absl::OkStatus();
 }
 
+/* static */
+absl::Status SanityCheckOutputTensors(
+    const std::vector<const TfLiteTensor*>& output_tensors) {
+  if (output_tensors.size() != 1) {
+    return CreateStatusWithPayload(
+        StatusCode::kInternal,
+        absl::StrFormat("Expected 1 output tensors, found %d",
+                        output_tensors.size()));
+  }
+
+  // Check number of landmarks.
+  if (output_tensors[0]->dims->data[2] != 17) {
+    return CreateStatusWithPayload(
+        StatusCode::kInternal,
+        absl::StrFormat(
+            "Expected tensor with dimensions [17] at index 3, found [%d]",
+            output_tensors[0]->dims->data[2]));
+  }
+  return absl::OkStatus();
+}
+
 absl::Status LandmarkDetector::Init(
     std::unique_ptr<LandmarkDetectorOptions> options) {
   // Set options.
@@ -113,21 +134,12 @@ StatusOr<LandmarkResult> LandmarkDetector::Detect(
 StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
     const std::vector<const TfLiteTensor*>& output_tensors,
     const FrameBuffer& /*frame_buffer*/, const BoundingBox& /*roi*/) {
-  if (output_tensors.size() != 1) {
-    return CreateStatusWithPayload(
-        StatusCode::kInternal,
-        absl::StrFormat("Expected 1 output tensors, found %d",
-                        output_tensors.size()));
-  }
-  if (output_tensors[0]->dims->data[2] != 16) {
-    return CreateStatusWithPayload(
-        StatusCode::kInternal,
-        absl::StrFormat("Expected 17 shape, found %d",
-                        output_tensors[0]->dims->data[2]));
-  }
+  RETURN_IF_ERROR(SanityCheckOutputTensors(output_tensors));
 
-  const TfLiteTensor* output_tensor = output_tensors[0];
-  int num_keypoints = output_tensor->dims->data[2];
+//  const TfLiteTensor* output_tensor = output_tensors[0];
+//  int num_keypoints = output_tensor->dims->data[2];
+  const int num_keypoints =
+      static_cast<int>(AssertAndReturnTypedTensor<float>(output_tensors[0])[2]);
 
   const float* outputs = AssertAndReturnTypedTensor<float>(output_tensor);
 	
