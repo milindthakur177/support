@@ -60,19 +60,9 @@ StatusOr<std::unique_ptr<LandmarkDetector>> LandmarkDetector::CreateFromOptions(
 
   std::unique_ptr<LandmarkDetector> landmark_detector;
   if (options_copy->base_options().has_model_file()) {
-    ASSIGN_OR_RETURN(landmark_detector,
+    ASSIGN_OR_RETURN(auto landmark_detector,
                      TaskAPIFactory::CreateFromBaseOptions<LandmarkDetector>(
                          &options_copy->base_options()));
-  } else {
-    // Should never happen because of SanityCheckOptions.
-    return CreateStatusWithPayload(
-        StatusCode::kInvalidArgument,
-        absl::StrFormat("Expected exactly one `base_options.model_file` "
-                        "to be provided, found 0."),
-        TfLiteSupportStatus::kInvalidArgumentError);
-  }
-
-  RETURN_IF_ERROR(landmark_detector->Init(std::move(options_copy)));
 
   return landmark_detector;
 }
