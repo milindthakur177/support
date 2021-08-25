@@ -84,7 +84,7 @@ constexpr char kExpectResults[] =
           landmarks {key_y : 0.27858606 key_x : 0.8685331 score : 0.6350124}
           landmarks {key_y : 0.9299859 key_x : 0.7128526 score : 0.9422764}
     )pb";
-/*
+
 // List of expected y coordinates of each keypoint
 std::vector<float> GOLDEN_KEY_Y = {0.31545776, 0.29907033, 0.3031672, 0.3031672, 0.30726406,0.3482326, 0.4096854, 0.30726406, 0.4260728, 
                                     0.2581018, 0.4260728, 0.49162248, 0.5530753, 0.34413573, 0.73333687, 0.27858606, 0.9299859};
@@ -92,7 +92,7 @@ std::vector<float> GOLDEN_KEY_Y = {0.31545776, 0.29907033, 0.3031672, 0.3031672,
 // List of expected x coordinates of each keypoint
 std::vector<float> GOLDEN_KEY_X = {0.4260728, 0.44246024, 0.44655707, 0.48752564, 0.47523507, 0.589947 ,0.48342878,0.72514313, 0.34413573,
                                     0.8357582, 0.24581124,0.73743373, 0.6841746, 0.88492055, 0.7210463, 0.8644362, 0.7128526};
-*/
+
 // List of expected scores of each keypoint
 std::vector<float> GOLDEN_SCORE = {0.70056206, 0.6350124, 0.24581124, 0.8808236, 0.75382113, 0.75382113, 0.90540475, 0.925889, 0.8808236, 
                                     0.75382113, 0.8029834, 0.8029834, 0.84395194, 0.8029834, 0.96685755, 0.6350124, 0.9422764};
@@ -150,8 +150,8 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
   const LandmarkResult& result = result_or.value();
 
   for (int i =0 ; i<num_keypoints ; ++i){
-    EXPECT_NEAR(result.landmarks(i).position(), GOLDEN_POSITION[i], 0.025);
-    //EXPECT_NEAR(result.landmarks(i).key_x(), GOLDEN_KEY_X[i], 0.025);
+    EXPECT_NEAR(result.landmarks(i).position(0), GOLDEN_KEY_Y[i], 0.025);
+    EXPECT_NEAR(result.landmarks(i).position(1), GOLDEN_KEY_X[i], 0.025);
     EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
     
   }
