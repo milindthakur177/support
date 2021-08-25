@@ -60,7 +60,7 @@ StatusOr<std::unique_ptr<LandmarkDetector>> LandmarkDetector::CreateFromOptions(
 
   std::unique_ptr<LandmarkDetector> landmark_detector;
   if (options_copy->base_options().has_model_file()) {
-    ASSIGN_OR_RETURN(landmark_detector,
+    ASSIGN_OR_RETURN(auto landmark_detector,
                      TaskAPIFactory::CreateFromBaseOptions<LandmarkDetector>(
                          &options_copy->base_options()));
   } 
@@ -138,9 +138,12 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 
     Landmark* landmarks = result.add_landmarks();
 
-		landmarks->set_key_y(outputs[3*i+0]);
-		landmarks->set_key_x(outputs[3*i+1]);
-		landmarks->set_score(outputs[3*i+2]);
+//		landmarks->set_key_y(outputs[3*i+0]);
+//		landmarks->set_key_x(outputs[3*i+1]);
+//		landmarks->set_score(outputs[3*i+2]);
+    landmarks->set_position(outputs[3*i+0])
+    landmarks->set_position(outputs[3*i+1])
+    landmarks->set_score(outputs[3*i+2])
 
   }
   

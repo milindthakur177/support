@@ -19,9 +19,8 @@ package tflite.task.vision;
 
 // A single detected landmark.
 message Landmark {
-  optional float key_y = 1;
-  optional float key_x = 2;
-  optional float score = 3;
+  repeated float position = 1;
+  optional float score = 2;
 }
 
 // List of detected landmarks.
