@@ -1,4 +1,4 @@
-/* Copyright 2020 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2021 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -134,16 +134,15 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 	
   LandmarkResult result;
 
-	for(int i =0 ; i<num_keypoints ; ++i){
+	for(int i =0 ; i<34 ; ++i){
 
     Landmark* landmarks = result.add_landmarks();
 
 //		landmarks->set_key_y(outputs[3*i+0]);
 //		landmarks->set_key_x(outputs[3*i+1]);
 //		landmarks->set_score(outputs[3*i+2]);
-    landmarks->set_position(0,outputs[3*i+0]);
-    landmarks->set_position(1,outputs[3*i+1]);
-    landmarks->set_score(outputs[3*i+2]);
+    landmarks->set_position(i,outputs[3*i+0]);
+//    landmarks->set_score(outputs[3*i+2]);
 
   }
   
