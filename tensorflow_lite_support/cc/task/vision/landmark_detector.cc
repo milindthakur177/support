@@ -141,8 +141,8 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 //		landmarks->set_key_y(outputs[3*i+0]);
 //		landmarks->set_key_x(outputs[3*i+1]);
 //		landmarks->set_score(outputs[3*i+2]);
-    landmarks->set_position(i,outputs[3*i+0]);
-    //landmarks->add_position(outputs[3*i+1]);
+    landmarks->set_position(0,outputs[3*i+0]);
+    landmarks->set_position(1,outputs[3*i+1]);
     landmarks->set_score(outputs[3*i+2]);
 
   }
