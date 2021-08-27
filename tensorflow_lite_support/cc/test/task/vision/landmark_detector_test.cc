@@ -111,25 +111,7 @@ StatusOr<ImageData> LoadImage(std::string image_name) {
   return DecodeImageFromFile(JoinPath("./" /*test src dir*/,
                                       kTestDataDirectory, image_name));
 }
-/*
-class CreateFromOptionsTest : public tflite_shims::testing::Test {};
 
-
-TEST_F(CreateFromOptionsTest, FailsWithMissingModel) {
-  LandmarkDetectorOptions options;
-
-  StatusOr<std::unique_ptr<LandmarkDetector>> landmark_detector_or =
-      LandmarkDetector::CreateFromOptions(options);
-
-  EXPECT_EQ(landmark_detector_or.status().code(),
-            absl::StatusCode::kInvalidArgument);
-  EXPECT_THAT(landmark_detector_or.status().message(),
-              HasSubstr("Missing mandatory `model_file` field in `base_options`"));
-  EXPECT_THAT(landmark_detector_or.status().GetPayload(kTfLiteSupportPayload),
-              Optional(absl::Cord(
-                  absl::StrCat(TfLiteSupportStatus::kInvalidArgumentError))));
-}
-*/
 
 class DetectTest : public tflite_shims::testing::Test {};
 
@@ -154,7 +136,7 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
   const LandmarkResult& result = result_or.value();
 	std::vector<float> key;
   for (int i = 0; i<17;++i){
-		key.push_back(result.landmarks(i).position(i).keypoint());
+		key.push_back(result.landmarks(i).positions().keypoint());
   }
 	EXPECT_EQ(key,GOLDEN);
 /*
