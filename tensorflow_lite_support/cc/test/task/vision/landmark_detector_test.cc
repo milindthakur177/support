@@ -63,7 +63,7 @@ constexpr char kTestDataDirectory[] =
 
 // Float model.
 constexpr char kMobileNetFloatWithMetadata[] =
-    "lite-model_movenet_singlepose_lightning_tflite_int8_4.tflite";
+    "lite-model_movenet_singlepose_lightning_tflite_int8_4_with_metadata.tflite";
 /*
 constexpr char kExpectResults[] =
     R"pb( landmarks {key_y : 0.31545776 key_x : 0.4260728 score : 0.70056206}
