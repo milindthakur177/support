@@ -114,7 +114,7 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
     
   }
 */
-	EXPECT_EQ(GOLDEN_KEY_Y,GOLDEN_KEY_X);
+	EXPECT_THAT(GOLDEN_KEY_Y,GOLDEN_KEY_X);
 }
 
 
