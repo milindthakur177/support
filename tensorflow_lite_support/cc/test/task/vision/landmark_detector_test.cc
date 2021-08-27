@@ -64,7 +64,7 @@ constexpr char kTestDataDirectory[] =
 // Float model.
 constexpr char kMobileNetFloatWithMetadata[] =
     "lite-model_movenet_singlepose_lightning_tflite_int8_4.tflite";
-
+/*
 constexpr char kExpectResults[] =
     R"pb( landmarks {key_y : 0.31545776 key_x : 0.4260728 score : 0.70056206}
           landmarks {key_y : 0.29907033 key_x : 0.44246024 score : 0.6350124}
@@ -84,7 +84,7 @@ constexpr char kExpectResults[] =
           landmarks {key_y : 0.27858606 key_x : 0.8685331 score : 0.6350124}
           landmarks {key_y : 0.9299859 key_x : 0.7128526 score : 0.9422764}
     )pb";
-
+*/
 // List of expected y coordinates of each keypoint
 constexpr float GOLDEN_KEY_Y[] = {0.31545776, 0.29907033, 0.3031672, 0.3031672, 0.30726406,0.3482326, 0.4096854, 0.30726406, 0.4260728, 
                                     0.2581018, 0.4260728, 0.49162248, 0.5530753, 0.34413573, 0.73333687, 0.27858606, 0.9299859};
@@ -97,11 +97,15 @@ constexpr float GOLDEN_KEY_X[] = {0.4260728, 0.44246024, 0.44655707, 0.48752564,
 constexpr float GOLDEN_SCORE[] = {0.70056206, 0.6350124, 0.24581124, 0.8808236, 0.75382113, 0.75382113, 0.90540475, 0.925889, 0.8808236, 
                                     0.75382113, 0.8029834, 0.8029834, 0.84395194, 0.8029834, 0.96685755, 0.6350124, 0.9422764};
 
-std::vector<float> GOLDEN_POSITION = {0.31545776,0.4260728, 0.29907033, 0.44246024, 0.3031672,0.44655707, 0.3031672, 0.48752564,
+constexpr float GOLDEN_POSITION[] = {0.31545776,0.4260728, 0.29907033, 0.44246024, 0.3031672,0.44655707, 0.3031672, 0.48752564,
                                      0.30726406,0.47523507,0.3482326,0.589947 , 0.4096854,0.48342878,  0.30726406,0.72514313, 0.4260728,0.34413573, 
                                     0.2581018,0.8357582, 0.4260728,0.24581124, 0.49162248,0.73743373, 0.5530753,0.6841746, 0.34413573,0.88492055,
                                     0.73333687,0.7210463, 0.27858606,0.8644362, 0.9299859,0.7128526};
 
+constexpr float GOLDEN[] = {0.31545776, 0.29907033, 0.3031672, 0.3031672, 0.30726406,0.3482326, 0.4096854, 0.30726406, 0.4260728, 
+                                    0.2581018, 0.4260728, 0.49162248, 0.5530753, 0.34413573, 0.73333687, 0.27858606, 0.9299859,
+																		0.4260728, 0.44246024, 0.44655707, 0.48752564, 0.47523507, 0.589947 ,0.48342878,0.72514313, 0.34413573,
+                                    0.8357582, 0.24581124,0.73743373, 0.6841746, 0.88492055, 0.7210463, 0.8644362, 0.7128526 }
 
 StatusOr<ImageData> LoadImage(std::string image_name) {
   return DecodeImageFromFile(JoinPath("./" /*test src dir*/,
@@ -148,14 +152,19 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
   SUPPORT_ASSERT_OK(result_or);
 
   const LandmarkResult& result = result_or.value();
-
+	std::vector<float> key;
+  for (int i = 0; i<17;++i){
+		key.push_back(result.landmarks(i).position(i).keypoint());
+  }
+	EXPECT_EQ(key,GOLDEN);
+/*
   for (int i =0 ; i<num_keypoints ; ++i){
-		EXPECT_NEAR(result.landmarks(i).position(0), GOLDEN_KEY_Y[i], 0.025);
-    EXPECT_NEAR(result.landmarks(i).position(1), GOLDEN_KEY_X[i], 0.025);
-    EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
+		EXPECT_NEAR(result.landmarks(i).position(i), GOLDEN_KEY_Y[i], 0.025);
+  //  EXPECT_NEAR(result.landmarks(i).position(1), GOLDEN_KEY_X[i], 0.025);
+  //  EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
     
   }
-  
+*/  
 }
 
 
