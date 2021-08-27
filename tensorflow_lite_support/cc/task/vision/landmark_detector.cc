@@ -138,8 +138,8 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 
     Landmark* landmarks = result.add_landmarks();
 
-		landmarks->set_key_y(outputs[3*i+0]);
-		landmarks->set_key_x(outputs[3*i+1]);
+		landmarks->set_keypoint_y(outputs[3*i+0]);
+		landmarks->set_keypoint_x(outputs[3*i+1]);
 		landmarks->set_score(outputs[3*i+2]);
 
   }
