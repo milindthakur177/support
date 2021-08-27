@@ -144,7 +144,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 
   }
 */ 
-  for (int i=0;i<17++i){
+  for (int i=0;i<17;++i){
     auto* landmarks = result.add_landmarks();
     landmarks->set_score(outputs[3*i+2]);
 
