@@ -112,7 +112,6 @@ StatusOr<ImageData> LoadImage(std::string image_name) {
                                       kTestDataDirectory, image_name));
 }
 
-
 class DetectTest : public tflite_shims::testing::Test {};
 
 TEST_F(DetectTest, SucceedsWithFloatModel) {
@@ -133,20 +132,14 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
   ImageDataFree(&rgb_image);
   SUPPORT_ASSERT_OK(result_or);
 
-  const LandmarkResult& result = result_or.value();
-	std::vector<float> key;
-  for (int i = 0; i<17;++i){
-		key.push_back(result.landmarks(i).positions().keypoint());
-  }
-	EXPECT_EQ(key,GOLDEN);
-/*
+
   for (int i =0 ; i<num_keypoints ; ++i){
 		EXPECT_NEAR(result.landmarks(i).position(i), GOLDEN_KEY_Y[i], 0.025);
-  //  EXPECT_NEAR(result.landmarks(i).position(1), GOLDEN_KEY_X[i], 0.025);
-  //  EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
+    EXPECT_NEAR(result.landmarks(i).position(1), GOLDEN_KEY_X[i], 0.025);
+    EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
     
   }
-*/  
+  
 }
 
 
