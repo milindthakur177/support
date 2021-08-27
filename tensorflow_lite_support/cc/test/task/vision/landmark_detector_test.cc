@@ -132,10 +132,10 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
   ImageDataFree(&rgb_image);
   SUPPORT_ASSERT_OK(result_or);
 
-
+	const LandmarkResult& result = result_or.value();
   for (int i =0 ; i<num_keypoints ; ++i){
-		EXPECT_NEAR(result.landmarks(i).position(i), GOLDEN_KEY_Y[i], 0.025);
-    EXPECT_NEAR(result.landmarks(i).position(1), GOLDEN_KEY_X[i], 0.025);
+    EXPECT_NEAR(result.landmarks(i).keypoint_y(), GOLDEN_KEY_Y[i], 0.025);
+    EXPECT_NEAR(result.landmarks(i).keypoint_x(), GOLDEN_KEY_X[i], 0.025);
     EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
     
   }
