@@ -22,8 +22,8 @@ message Position{
 // A single detected landmark.
 message Landmark {
   optional float keypoint_x = 1;
-  optional float keypoint_y = 3;
-  optional float score = 2;
+  optional float keypoint_y = 2;
+  optional float score = 3;
 }
 
 // List of detected landmarks.
