@@ -15,11 +15,16 @@ limitations under the License.
 
 package com.google.android.odml.image;
 
+import com.google.android.odml.image.annotation.KeepForSdk;
+
 /** Manages internal image data storage. The interface is package-private. */
+@KeepForSdk
 interface ImageContainer {
   /** Returns the properties of the contained image. */
+  @KeepForSdk
   ImageProperties getImageProperties();
 
   /** Close the image container and releases the image resource inside. */
+  @KeepForSdk
   void close();
 }
