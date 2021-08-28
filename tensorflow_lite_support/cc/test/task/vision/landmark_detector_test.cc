@@ -135,7 +135,7 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
 	std::vector<float> posi;
 
 	for (int i =0; i<num_keypoints; ++i){
-		posi.push_back(result.landmarks(i).positions(i).key());
+		posi.push_back(result.landmarks().positions(i).key());
 	}
 	EXPECT_EQ(posi, GOLDEN_KEY_Y);
 }
