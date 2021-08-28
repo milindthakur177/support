@@ -1,4 +1,4 @@
-/* Copyright 2020 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2021 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ limitations under the License.
 #include "absl/algorithm/container.h"
 #include "absl/strings/str_format.h"
 #include "absl/strings/string_view.h"
-#include "flatbuffers/flatbuffers.h"  
+#include "flatbuffers/flatbuffers.h"
 #include "tensorflow_lite_support/cc/common.h"
 #include "tensorflow_lite_support/cc/port/integral_types.h"
 #include "tensorflow_lite_support/cc/port/status_macros.h"
@@ -45,10 +45,7 @@ using ::tflite::task::core::AssertAndReturnTypedTensor;
 using ::tflite::task::core::TaskAPIFactory;
 using ::tflite::task::core::TfLiteEngine;
 
-
-
 }  // namespace
-
 
 /* static */
 StatusOr<std::unique_ptr<LandmarkDetector>> LandmarkDetector::CreateFromOptions(
@@ -131,31 +128,31 @@ StatusOr<LandmarkResult> LandmarkDetector::Detect(
 StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
     const std::vector<const TfLiteTensor*>& output_tensors,
     const FrameBuffer& /*frame_buffer*/, const BoundingBox& /*roi*/) {
+  // Most of the checks here should never happen, as outputs have been validated
+  // at construction time. Checking nonetheless and returning internal errors if
+  // something bad happens.
   RETURN_IF_ERROR(SanityCheckOutputTensors(output_tensors));
 
+  // Get number of keypoints.
+  const int num_keypoints = output_tensors[0]->dims->data[2];
+  const float* outputs = AssertAndReturnTypedTensor<float>(output_tensors[0]);
 
-  const TfLiteTensor* output_tensor = output_tensors[0];
-  const int num_keypoints = output_tensor->dims->data[2];
-  const float* outputs = AssertAndReturnTypedTensor<float>(output_tensor);
-	
   LandmarkResult result;
 
-  for(int i =0 ; i<num_keypoints ; ++i){
-
+  for (int i = 0; i < num_keypoints; ++i) {
     Landmark* landmarks = result.add_landmarks();
-
-    landmarks->set_score(outputs[3*i+2]);
-
+    // Get Scores
+    landmarks->set_score(outputs[3 * i + 2]);
+    // Get y coordinates
     landmarks->add_position(0);
-    landmarks->set_position(0,outputs[3*i+0]);
+    landmarks->set_position(0, outputs[3 * i + 0]);
+    // Get x coordinates
     landmarks->add_position(1);
-    landmarks->set_position(1,outputs[3*i+1]);
-
+    landmarks->set_position(1, outputs[3 * i + 1]);
   }
 
   return result;
 }
-
 
 }  // namespace vision
 }  // namespace task
