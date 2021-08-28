@@ -1,4 +1,4 @@
-/* Copyright 2020 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2021 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -100,7 +100,8 @@ TEST_F(CreateFromOptionsTest, FailsWithMissingModel) {
   EXPECT_EQ(landmark_detector_or.status().code(),
             absl::StatusCode::kInvalidArgument);
   EXPECT_THAT(landmark_detector_or.status().message(),
-              HasSubstr("Missing mandatory `model_file` field in `base_options`"));
+              HasSubstr("Expected exactly one `base_options.model_file` "
+                        "to be provided, found 0."));
   EXPECT_THAT(landmark_detector_or.status().GetPayload(kTfLiteSupportPayload),
               Optional(absl::Cord(
                   absl::StrCat(TfLiteSupportStatus::kInvalidArgumentError))));
@@ -137,12 +138,7 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
 
 }
 
-
-
 }  // namespace
 }  // namespace vision
 }  // namespace task
 }  // namespace tflite
-
-
-
