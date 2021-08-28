@@ -33,8 +33,8 @@ limitations under the License.
 #include "tensorflow_lite_support/cc/task/core/task_utils.h"
 #include "tensorflow_lite_support/cc/task/core/tflite_engine.h"
 #include "tensorflow_lite_support/cc/task/vision/core/frame_buffer.h"
-#include "tensorflow_lite_support/cc/task/vision/proto/landmarks_proto_inc.h"
 #include "tensorflow_lite_support/cc/task/vision/proto/landmark_detector_options_proto_inc.h"
+#include "tensorflow_lite_support/cc/task/vision/proto/landmarks_proto_inc.h"
 #include "tensorflow_lite_support/cc/task/vision/utils/frame_buffer_common_utils.h"
 #include "tensorflow_lite_support/cc/task/vision/utils/frame_buffer_utils.h"
 #include "tensorflow_lite_support/cc/test/test_utils.h"
@@ -56,7 +56,7 @@ using ::tflite::task::core::TaskAPIFactory;
 using ::tflite::task::core::TfLiteEngine;
 
 // Number of keypoints
-int num_keypoints = 17;
+const int num_keypoints = 17;
 
 constexpr char kTestDataDirectory[] =
     "tensorflow_lite_support/cc/test/testdata/task/vision/";
@@ -84,8 +84,8 @@ constexpr float GOLDEN_SCORE[] = {
     0.84395194, 0.8029834, 0.96685755, 0.6350124,  0.9422764};
 
 StatusOr<ImageData> LoadImage(std::string image_name) {
-  return DecodeImageFromFile(JoinPath("./" /*test src dir*/,
-                                      kTestDataDirectory, image_name));
+  return DecodeImageFromFile(
+      JoinPath("./" /*test src dir*/, kTestDataDirectory, image_name));
 }
 
 class CreateFromOptionsTest : public tflite_shims::testing::Test {};
@@ -115,26 +115,24 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
       FrameBuffer::Dimension{rgb_image.width, rgb_image.height});
 
   LandmarkDetectorOptions options;
-  options.mutable_base_options()->mutable_model_file()->set_file_name(
-      JoinPath( "./" /*test src dir*/,kTestDataDirectory,
-               kMobileNetFloatModel));
-  SUPPORT_ASSERT_OK_AND_ASSIGN(std::unique_ptr<LandmarkDetector> landmark_detector,
-                       LandmarkDetector::CreateFromOptions(options));
-  
-  StatusOr<LandmarkResult> result_or =
-      landmark_detector->Detect(*frame_buffer);
+  options.mutable_base_options()->mutable_model_file()->set_file_name(JoinPath(
+      "./" /*test src dir*/, kTestDataDirectory, kMobileNetFloatModel));
+  SUPPORT_ASSERT_OK_AND_ASSIGN(
+      std::unique_ptr<LandmarkDetector> landmark_detector,
+      LandmarkDetector::CreateFromOptions(options));
+
+  StatusOr<LandmarkResult> result_or = 
+    landmark_detector->Detect(*frame_buffer);
   ImageDataFree(&rgb_image);
   SUPPORT_ASSERT_OK(result_or);
 
   const LandmarkResult& result = result_or.value();
 
-  for (int i =0 ; i<num_keypoints ; ++i){
+  for (int i = 0; i < num_keypoints; ++i) {
     EXPECT_NEAR(result.landmarks(i).position(0), GOLDEN_KEY_Y[i], 0.025);
     EXPECT_NEAR(result.landmarks(i).position(1), GOLDEN_KEY_X[i], 0.025);
     EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
-    
   }
-
 }
 
 }  // namespace
