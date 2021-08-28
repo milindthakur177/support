@@ -158,7 +158,6 @@ proto_library(
     srcs = ["landmark_detector_options.proto"],
     deps = [
         "//tensorflow_lite_support/cc/task/core/proto:base_options_proto",
-        "@org_tensorflow//tensorflow/lite/experimental/acceleration/configuration:configuration_proto",
     ],
 )
 

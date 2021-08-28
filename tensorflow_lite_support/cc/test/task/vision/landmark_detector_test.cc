@@ -65,25 +65,6 @@ constexpr char kTestDataDirectory[] =
 constexpr char kMobileNetFloatWithMetadata[] =
     "lite-model_movenet_singlepose_lightning_tflite_int8_4.tflite";
 
-constexpr char kExpectResults[] =
-    R"pb( landmarks {key_y : 0.31545776 key_x : 0.4260728 score : 0.70056206}
-          landmarks {key_y : 0.29907033 key_x : 0.44246024 score : 0.6350124}
-          landmarks {key_y : 0.3031672 key_x : 0.44655707 score : 0.24581124}
-          landmarks {key_y : 0.3031672 key_x : 0.48752564 score : 0.8808236}
-          landmarks {key_y : 0.3031672 key_x : 0.47523507 score : 0.75382113}
-          landmarks {key_y : 0.3482326 key_x : 0.589947 score : 0.75382113}
-          landmarks {key_y : 0.4096854 key_x : 0.48342878 score : 0.90540475}
-          landmarks {key_y : 0.30726406 key_x : 0.72514313 score : 0.925889}
-          landmarks {key_y : 0.4260728 key_x : 0.34413573 score : 0.8808236}
-          landmarks {key_y : 0.2581018 key_x : 0.8357582 score : 0.75382113}
-          landmarks {key_y : 0.4260728 key_x : 0.24581124 score : 0.8029834}
-          landmarks {key_y : 0.49162248 key_x : 0.73743373 score : 0.8029834}
-          landmarks {key_y : 0.5530753 key_x : 0.6800778 score : 0.84395194}
-          landmarks {key_y : 0.3400389 key_x : 0.8849205 score : 0.8029834}
-          landmarks {key_y : 0.73333687 key_x : 0.7210463 score : 0.96685755}
-          landmarks {key_y : 0.27858606 key_x : 0.8685331 score : 0.6350124}
-          landmarks {key_y : 0.9299859 key_x : 0.7128526 score : 0.9422764}
-    )pb";
 
 // List of expected y coordinates of each keypoint
 std::vector<float> GOLDEN_KEY_Y = {0.31545776, 0.29907033, 0.3031672, 0.3031672, 0.30726406,0.3482326, 0.4096854, 0.30726406, 0.4260728, 

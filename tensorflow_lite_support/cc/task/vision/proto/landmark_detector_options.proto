@@ -17,7 +17,6 @@ syntax = "proto2";
 
 package tflite.task.vision;
 
-import "tensorflow/lite/experimental/acceleration/configuration/configuration.proto";
 import "tensorflow_lite_support/cc/task/core/proto/base_options.proto";
 
 // Options for setting up an LandmarkDetector.
