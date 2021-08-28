@@ -153,7 +153,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 
     auto* posi = landmarks->add_positions();
 		posi->set_key(outputs[3*i+0]);
-		posi->set_key(outputs[3*i+1]);
+		//posi->set_key(outputs[3*i+1]);
 	
 
   }
