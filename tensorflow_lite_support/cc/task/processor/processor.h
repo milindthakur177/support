@@ -75,8 +75,7 @@ class Preprocessor {
 
   static absl::Status SanityCheck(
       int num_expected_tensors, core::TfLiteEngine* engine,
-      const std::initializer_list<int> input_indices,
-      bool requires_metadata = true);
+      const std::initializer_list<int> input_indices);
 };
 
 // Abstract base class for all Postprocessors.
@@ -124,8 +123,7 @@ class Postprocessor {
 
   static absl::Status SanityCheck(
       int num_expected_tensors, core::TfLiteEngine* engine,
-      const std::initializer_list<int> output_indices,
-      bool requires_metadata = true);
+      const std::initializer_list<int> output_indices);
 };
 }  // namespace processor
 }  // namespace task

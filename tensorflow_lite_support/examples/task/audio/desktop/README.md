@@ -3,26 +3,37 @@
 This folder contains simple command-line tools for easily trying out the C++
 Audio Task APIs.
 
-## Coral Integration
+## Coral integration
 
 Task Library now supports fast TFLite inference delegated onto
-[Coral Edge TPU devices](https://coral.ai/docs/edgetpu/inference/) on Linux and
-macOS. See the
+[Coral Edge TPU devices](https://coral.ai/docs/edgetpu/inference/). See the
 [documentation](https://www.tensorflow.org/lite/inference_with_metadata/task_library/overview#run_task_library_with_delegates)
-for more details.
-
-To run the demo on a Coral device, add `--define darwinn_portable=1` to the
-bazel command.
-
-Note the `libusb` package is required. It can be installed as follows:
+for more details. To run the demo on a Coral device, add the following
+configurations to the bazel command:
 
 ```bash
-# On Linux
+# On the Linux
+CORAL_SETTING="--define darwinn_portable=1 --linkopt=-lusb-1.0"
+
+# On the Mac
+# add '--linkopt=-lusb-1.0 --linkopt=-L/opt/local/lib/' if you are
+# using MacPorts or '--linkopt=-lusb-1.0 --linkopt=-L/opt/homebrew/lib' if you
+# are using Homebrew.
+CORAL_SETTING="--define darwinn_portable=1 --linkopt=-L/opt/local/lib/ --linkopt=-lusb-1.0"
+
+# Windows is not supported yet.
+```
+
+Note, the `libusb-1.0-0-dev` package is required. It can be installed as
+follows:
+
+```bash
+# On the Linux
 sudo apt-get install libusb-1.0-0-dev
 
-# On macOS using MacPorts
+# On the macOS
 port install libusb
-# or Homebrew
+# or
 brew install libusb
 ```
 
@@ -66,8 +77,9 @@ bazel run -c opt \
   --audio_wav_path=/tmp/miao.wav
 ```
 
-To run the demo on a [Coral Edge TPU device](https://coral.ai/products/), check
-[Coral Integration](#coral-integration) section and then run:
+To run the demo on a [Coral Edge TPU device](https://coral.ai/products/), create
+the Coral configurations, `CORAL_SETTING` (see the section,
+[Coral integration](#coral-integration)), then run:
 
 ```bash
 # Download the Coral model:
@@ -76,7 +88,7 @@ curl \
  -o /tmp/yamnet_edgetpu.tflite
 
 # Run the classification tool:
-bazel run -c opt --define darwinn_portable=1 \
+bazel run -c opt ${CORAL_SETTING} \
  tensorflow_lite_support/examples/task/audio/desktop:audio_classifier_demo -- \
   --model_path=/tmp/yamnet_edgetpu.tflite \
   --audio_wav_path=/path/to/the/audio_file.wav \

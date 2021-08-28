@@ -17,7 +17,6 @@ package com.google.android.odml.image;
 
 import android.graphics.Rect;
 import androidx.annotation.IntDef;
-import com.google.android.odml.image.annotation.KeepForSdk;
 import java.io.Closeable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -87,19 +86,13 @@ public class MlImage implements Closeable {
   public static final int IMAGE_FORMAT_JPEG = 9;
 
   /** Specifies the image container type. Would be useful for choosing extractors. */
-  @IntDef({
-    STORAGE_TYPE_BITMAP,
-    STORAGE_TYPE_BYTEBUFFER,
-    STORAGE_TYPE_MEDIA_IMAGE,
-    STORAGE_TYPE_IMAGE_PROXY
-  })
+  @IntDef({STORAGE_TYPE_BITMAP, STORAGE_TYPE_BYTEBUFFER, STORAGE_TYPE_MEDIA_IMAGE})
   @Retention(RetentionPolicy.SOURCE)
   public @interface StorageType {}
 
   public static final int STORAGE_TYPE_BITMAP = 1;
   public static final int STORAGE_TYPE_BYTEBUFFER = 2;
   public static final int STORAGE_TYPE_MEDIA_IMAGE = 3;
-  public static final int STORAGE_TYPE_IMAGE_PROXY = 4;
 
   /**
    * Returns a list of supported image properties for this {@link MlImage}.
@@ -210,8 +203,13 @@ public class MlImage implements Closeable {
   private int referenceCount;
 
   /** Constructs an {@link MlImage} with a built container. */
-  @KeepForSdk
-  MlImage(ImageContainer container, int rotation, Rect roi, long timestamp, int width, int height) {
+  MlImage(
+      ImageContainer container,
+      int rotation,
+      Rect roi,
+      long timestamp,
+      int width,
+      int height) {
     this.container = container;
     this.rotation = rotation;
     this.roi = new Rect();
@@ -227,7 +225,6 @@ public class MlImage implements Closeable {
    *
    * @return the current container.
    */
-  @KeepForSdk
   ImageContainer getContainer() {
     // According to the design, in the future we will support multiple containers in one image.
     // Currently just return the original container.

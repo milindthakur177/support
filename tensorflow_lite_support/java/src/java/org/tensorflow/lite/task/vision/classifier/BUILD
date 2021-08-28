@@ -19,10 +19,6 @@ filegroup(
 )
 
 # Default target that uses BuiltInOpResolver, registers all built-in OPs.
-# IMPORTANT: In order to use hardware acceleration delegates, you must
-# additionally link to the appropriate delegate plugin target as follows:
-# 1. GPU delegate plugin: tensorflow_lite_support/acceleration/configuration:gpu_delegate_plugin_android
-# 2. NNAPI delegate plugin: included in this target.
 android_library_with_tflite(
     name = "image_classifier",
     tflite_exports = [
@@ -34,7 +30,7 @@ android_library_with_tflite(
 )
 
 # Java-only target, needs to be used together with a native target similar to
-# tensorflow_lite_support/java/src/native/task/vision/classifier:image_classifier_native.
+# //third_party/tensorflow_lite_support/java/src/native/task/vision/classifier:image_classifier_native.
 # Use this target when you want to provide a MutableOpResolver with customized
 # OPs and/or a subset of BuiltInOps to reduce binary size.
 android_library(
