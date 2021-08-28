@@ -16,12 +16,13 @@ limitations under the License.
 syntax = "proto2";
 
 package tflite.task.vision;
+message Position{
+  optional float key = 1;
+}
 
-// A single detected landmark.
 message Landmark {
-  optional float key_y = 1;
-  optional float key_x = 2;
-  optional float score = 3;
+  repeated Position positions = 1;
+  optional float score = 2;
 }
 
 // List of detected landmarks.

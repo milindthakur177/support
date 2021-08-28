@@ -134,7 +134,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
   const float* outputs = AssertAndReturnTypedTensor<float>(output_tensor);
 	
   LandmarkResult result;
-
+/*
 	for(int i =0 ; i<num_keypoints ; ++i){
 
     Landmark* landmarks = result.add_landmarks();
@@ -144,7 +144,20 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 		landmarks->set_score(outputs[3*i+2]);
 
   }
-  
+*/
+  	for(int i =0 ; i<num_keypoints ; ++i){
+
+    Landmark* landmarks = result.add_landmarks();
+
+    landmarks->set_score(outputs[3*i+2]);
+
+    auto* posi = landmarks->add_positions();
+		posi->set_key(outputs[3*i+0]);
+		posi->set_key(outputs[3*i+1]);
+	
+
+  }
+
   return result;
 }
 

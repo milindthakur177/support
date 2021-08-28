@@ -124,14 +124,20 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
   SUPPORT_ASSERT_OK(result_or);
 
   const LandmarkResult& result = result_or.value();
-
+/*
   for (int i =0 ; i<num_keypoints ; ++i){
     EXPECT_NEAR(result.landmarks(i).key_y(), GOLDEN_KEY_Y[i], 0.025);
     EXPECT_NEAR(result.landmarks(i).key_x(), GOLDEN_KEY_X[i], 0.025);
     EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
     
   }
+*/
+	std::vector<float> posi;
 
+	for (int i =0; i<num_keypoints; ++i){
+		posi.push_back(result.landmarks(i).positions().key());
+	}
+	EXPECT_EQ(posi, GOLDEN_KEY_Y);
 }
 
 
