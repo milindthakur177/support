@@ -94,6 +94,8 @@ absl::Status SanityCheckOutputTensors(
         absl::StrFormat("Expected 1 output tensors, found %d",
                         output_tensors.size()));
   }
+  return absl::OkStatus();
+}
 
 absl::Status LandmarkDetector::Init(
     std::unique_ptr<LandmarkDetectorOptions> options) {
