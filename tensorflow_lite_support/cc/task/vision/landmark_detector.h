@@ -26,7 +26,6 @@ limitations under the License.
 #include "tensorflow/lite/core/shims/cc/kernels/register.h"
 #include "tensorflow_lite_support/cc/port/integral_types.h"
 #include "tensorflow_lite_support/cc/port/statusor.h"
-#include "tensorflow_lite_support/cc/task/core/external_file_handler.h"
 #include "tensorflow_lite_support/cc/task/vision/core/base_vision_task_api.h"
 #include "tensorflow_lite_support/cc/task/vision/core/frame_buffer.h"
 #include "tensorflow_lite_support/cc/task/vision/proto/landmarks_proto_inc.h"
@@ -68,7 +67,7 @@ class LandmarkDetector : public BaseVisionTaskApi<LandmarkResult> {
       const LandmarkDetectorOptions& options
       );
 
-  // Performs actual classification on the provided FrameBuffer.
+  // Performs actual detection on the provided FrameBuffer.
   //
   // The FrameBuffer can be of any size and any of the supported formats, i.e.
   // RGBA, RGB, NV12, NV21, YV12, YV21. It is automatically pre-processed before
@@ -83,7 +82,7 @@ class LandmarkDetector : public BaseVisionTaskApi<LandmarkResult> {
   tflite::support::StatusOr<LandmarkResult> Detect(
       const FrameBuffer& frame_buffer);
 
-  // Same as above, except that the classification is performed based on the
+  // Same as above, except that the detection is performed based on the
   // input region of interest. Cropping according to this region of interest is
   // prepended to the pre-processing operations.
   //
