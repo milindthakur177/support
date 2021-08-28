@@ -63,7 +63,7 @@ constexpr char kTestDataDirectory[] =
 
 // Float model.
 constexpr char kMobileNetFloatWithMetadata[] =
-    "lite-model_movenet_singlepose_lightning_tflite_int8_4_with_metadata.tflite";
+    "lite-model_movenet_singlepose_lightning_tflite_int8_4.tflite";
 
 constexpr char kExpectResults[] =
     R"pb( landmarks {key_y : 0.31545776 key_x : 0.4260728 score : 0.70056206}
@@ -143,15 +143,14 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
   SUPPORT_ASSERT_OK(result_or);
 
   const LandmarkResult& result = result_or.value();
-/*
+
   for (int i =0 ; i<num_keypoints ; ++i){
     EXPECT_NEAR(result.landmarks(i).key_y(), GOLDEN_KEY_Y[i], 0.025);
     EXPECT_NEAR(result.landmarks(i).key_x(), GOLDEN_KEY_X[i], 0.025);
     EXPECT_NEAR(result.landmarks(i).score(), GOLDEN_SCORE[i], 0.52);
     
   }
-*/
-	EXPECT_EQ(GOLDEN_KEY_X,GOLDEN_KEY_Y);
+
 }
 
 
