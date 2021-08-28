@@ -150,7 +150,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
     Landmark* landmarks = result.add_landmarks();
 
     landmarks->set_score(outputs[3*i+2]);
-    landmarks->add_position(i);
+    landmarks->add_position();
 
     landmarks->set_position(0,outputs[3*i+0]);
 
