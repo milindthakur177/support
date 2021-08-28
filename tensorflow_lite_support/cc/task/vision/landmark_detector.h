@@ -44,7 +44,7 @@ namespace vision {
 //    - image input of size `[batch x height x width x channels]`.
 //    - batch inference is not supported (`batch` is required to be 1).
 //    - only RGB inputs are supported (`channels` is required to be 3).
-//    - NormalizationOptions is not required.
+//    - `NormalizationOptions` is not required.
 // Output tensor:
 //  (kTfLiteFloat32)
 //    - one output tensor with 4 dimensions `[1 x 1 x num_keypoints x 3]`,
