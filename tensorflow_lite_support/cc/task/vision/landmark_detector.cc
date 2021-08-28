@@ -131,7 +131,7 @@ StatusOr<LandmarkResult> LandmarkDetector::Detect(
 StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
     const std::vector<const TfLiteTensor*>& output_tensors,
     const FrameBuffer& /*frame_buffer*/, const BoundingBox& /*roi*/) {
-  RETURN_IF_ERROR(SanityCheckOutputTensors);
+  RETURN_IF_ERROR(SanityCheckOutputTensors(output_tensors));
 
 
   const TfLiteTensor* output_tensor = output_tensors[0];
