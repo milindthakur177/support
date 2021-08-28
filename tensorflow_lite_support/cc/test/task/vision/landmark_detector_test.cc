@@ -62,22 +62,26 @@ constexpr char kTestDataDirectory[] =
     "tensorflow_lite_support/cc/test/testdata/task/vision/";
 
 // Float model.
-constexpr char kMobileNetFloatWithMetadata[] =
+constexpr char kMobileNetFloatModel[] =
     "lite-model_movenet_singlepose_lightning_tflite_int8_4.tflite";
 
-
 // List of expected y coordinates of each keypoint
-constexpr float GOLDEN_KEY_Y[] = {0.31545776, 0.29907033, 0.3031672, 0.3031672, 0.30726406,0.3482326, 0.4096854, 0.30726406, 0.4260728, 
-                                    0.2581018, 0.4260728, 0.49162248, 0.5530753, 0.34413573, 0.73333687, 0.27858606, 0.9299859};
+constexpr float GOLDEN_KEY_Y[] = {
+    0.31545776, 0.29907033, 0.3031672,  0.3031672,  0.30726406, 0.3482326,
+    0.4096854,  0.30726406, 0.4260728,  0.2581018,  0.4260728,  0.49162248,
+    0.5530753,  0.34413573, 0.73333687, 0.27858606, 0.9299859};
 
 // List of expected x coordinates of each keypoint
-constexpr float GOLDEN_KEY_X[] = {0.4260728, 0.44246024, 0.44655707, 0.48752564, 0.47523507, 0.589947 ,0.48342878,0.72514313, 0.34413573,
-                                    0.8357582, 0.24581124,0.73743373, 0.6841746, 0.88492055, 0.7210463, 0.8644362, 0.7128526};
+constexpr float GOLDEN_KEY_X[] = {
+    0.4260728,  0.44246024, 0.44655707, 0.48752564, 0.47523507, 0.589947,
+    0.48342878, 0.72514313, 0.34413573, 0.8357582,  0.24581124, 0.73743373,
+    0.6841746,  0.88492055, 0.7210463,  0.8644362,  0.7128526};
 
 // List of expected scores of each keypoint
-constexpr float GOLDEN_SCORE[] = {0.70056206, 0.6350124, 0.24581124, 0.8808236, 0.75382113, 0.75382113, 0.90540475, 0.925889, 0.8808236, 
-                                    0.75382113, 0.8029834, 0.8029834, 0.84395194, 0.8029834, 0.96685755, 0.6350124, 0.9422764};
-
+constexpr float GOLDEN_SCORE[] = {
+    0.70056206, 0.6350124, 0.24581124, 0.8808236,  0.75382113, 0.75382113,
+    0.90540475, 0.925889,  0.8808236,  0.75382113, 0.8029834,  0.8029834,
+    0.84395194, 0.8029834, 0.96685755, 0.6350124,  0.9422764};
 
 StatusOr<ImageData> LoadImage(std::string image_name) {
   return DecodeImageFromFile(JoinPath("./" /*test src dir*/,
@@ -114,7 +118,7 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
   LandmarkDetectorOptions options;
   options.mutable_base_options()->mutable_model_file()->set_file_name(
       JoinPath( "./" /*test src dir*/,kTestDataDirectory,
-               kMobileNetFloatWithMetadata));
+               kMobileNetFloatModel));
   SUPPORT_ASSERT_OK_AND_ASSIGN(std::unique_ptr<LandmarkDetector> landmark_detector,
                        LandmarkDetector::CreateFromOptions(options));
   

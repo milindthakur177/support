@@ -184,7 +184,6 @@ cc_library_with_tflite(
         "//tensorflow_lite_support/cc:common",
         "//tensorflow_lite_support/cc/port:status_macros",
         "//tensorflow_lite_support/cc/port:statusor",
-        "//tensorflow_lite_support/cc/task/core:external_file_handler",
         "//tensorflow_lite_support/cc/task/core:task_utils",
         "//tensorflow_lite_support/cc/task/vision/core:frame_buffer",
         "//tensorflow_lite_support/cc/task/vision/proto:landmarks_proto_inc",

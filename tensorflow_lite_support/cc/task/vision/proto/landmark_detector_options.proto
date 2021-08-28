@@ -1,4 +1,4 @@
-/* Copyright 2020 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2021 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,5 +25,4 @@ message LandmarkDetectorOptions {
   // Base options for configuring Task library, such as specifying the TfLite
   // model file with metadata, accelerator options, etc.
   optional tflite.task.core.BaseOptions base_options = 13;
-	
 }
