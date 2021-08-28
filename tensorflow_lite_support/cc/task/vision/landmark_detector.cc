@@ -85,6 +85,15 @@ absl::Status LandmarkDetector::SanityCheckOptions(
   // Nothing to check
   return absl::OkStatus();
 }
+/* static */
+absl::Status SanityCheckOutputTensors(
+    const std::vector<const TfLiteTensor*>& output_tensors) {
+  if (output_tensors.size() != 1) {
+    return CreateStatusWithPayload(
+        StatusCode::kInternal,
+        absl::StrFormat("Expected 1 output tensors, found %d",
+                        output_tensors.size()));
+  }
 
 absl::Status LandmarkDetector::Init(
     std::unique_ptr<LandmarkDetectorOptions> options) {
@@ -122,30 +131,16 @@ StatusOr<LandmarkResult> LandmarkDetector::Detect(
 StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
     const std::vector<const TfLiteTensor*>& output_tensors,
     const FrameBuffer& /*frame_buffer*/, const BoundingBox& /*roi*/) {
-  if (output_tensors.size() != 1) {
-    return CreateStatusWithPayload(
-        StatusCode::kInternal,
-        absl::StrFormat("Expected 1 output tensors, found %d",
-                        output_tensors.size()));
-  }
+  RETURN_IF_ERROR(SanityCheckOutputTensors);
+
 
   const TfLiteTensor* output_tensor = output_tensors[0];
 
   const float* outputs = AssertAndReturnTypedTensor<float>(output_tensor);
 	
   LandmarkResult result;
-/*
-	for(int i =0 ; i<num_keypoints ; ++i){
 
-    Landmark* landmarks = result.add_landmarks();
-
-		landmarks->set_key_y(outputs[3*i+0]);
-		landmarks->set_key_x(outputs[3*i+1]);
-		landmarks->set_score(outputs[3*i+2]);
-
-  }
-*/
-  	for(int i =0 ; i<num_keypoints ; ++i){
+  for(int i =0 ; i<num_keypoints ; ++i){
 
     Landmark* landmarks = result.add_landmarks();
 
