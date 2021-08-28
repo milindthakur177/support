@@ -16,12 +16,9 @@ limitations under the License.
 syntax = "proto2";
 
 package tflite.task.vision;
-message Position{
-  optional float key = 1;
-}
 
 message Landmark {
-  repeated Position positions = 1;
+  repeated float position = 1 [packed = true];
   optional float score = 2;
 }
 
