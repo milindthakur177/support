@@ -88,24 +88,6 @@ StatusOr<ImageData> LoadImage(std::string image_name) {
                                       kTestDataDirectory, image_name));
 }
 
-class CreateFromOptionsTest : public tflite_shims::testing::Test {};
-
-
-TEST_F(CreateFromOptionsTest, FailsWithMissingModel) {
-  LandmarkDetectorOptions options;
-
-  StatusOr<std::unique_ptr<LandmarkDetector>> landmark_detector_or =
-      LandmarkDetector::CreateFromOptions(options);
-
-  EXPECT_EQ(landmark_detector_or.status().code(),
-            absl::StatusCode::kInvalidArgument);
-  EXPECT_THAT(landmark_detector_or.status().message(),
-              HasSubstr("Expected exactly one `base_options.model_file` "
-                        "to be provided, found 0."));
-  EXPECT_THAT(landmark_detector_or.status().GetPayload(kTfLiteSupportPayload),
-              Optional(absl::Cord(
-                  absl::StrCat(TfLiteSupportStatus::kInvalidArgumentError))));
-}
 
 class DetectTest : public tflite_shims::testing::Test {};
 
