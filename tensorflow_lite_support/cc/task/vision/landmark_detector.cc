@@ -64,8 +64,7 @@ StatusOr<std::unique_ptr<LandmarkDetector>> LandmarkDetector::CreateFromOptions(
     // Should never happen because of SanityCheckOptions.
     return CreateStatusWithPayload(
         StatusCode::kInvalidArgument,
-        absl::StrFormat("Expected exactly one `base_options.model_file` "
-                        "to be provided, found 0."),
+        absl::StrFormat("Missing mandatory `model_file` field in `base_options`"),
         TfLiteSupportStatus::kInvalidArgumentError);
   }
 
@@ -141,12 +140,12 @@ StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
 
   for (int i = 0; i < num_keypoints; ++i) {
     Landmark* landmarks = result.add_landmarks();
-    // Get Scores
+    // Set Scores
     landmarks->set_score(outputs[3 * i + 2]);
-    // Get y coordinates
+    // Set y coordinates
     landmarks->add_position(0);
     landmarks->set_position(0, outputs[3 * i + 0]);
-    // Get x coordinates
+    // Set x coordinates
     landmarks->add_position(1);
     landmarks->set_position(1, outputs[3 * i + 1]);
   }
