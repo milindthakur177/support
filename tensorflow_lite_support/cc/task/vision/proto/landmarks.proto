@@ -16,9 +16,6 @@ limitations under the License.
 syntax = "proto2";
 
 package tflite.task.vision;
-message Position{
-  optional float keypoint = 1;
-} 
 // A single detected landmark.
 message Landmark {
   optional float keypoint_x = 1;
