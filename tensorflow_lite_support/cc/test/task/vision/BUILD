@@ -183,6 +183,8 @@ cc_test_with_tflite(
     ],
     tflite_deps = [
         "@org_tensorflow//tensorflow/lite/core/shims:cc_shims_test_util",
+	"//tensorflow_lite_support/cc/task/core:task_api_factory",
+        "//tensorflow_lite_support/cc/task/core:tflite_engine",
         "//tensorflow_lite_support/cc/task/vision:landmark_detector",
     ],
     deps = [
