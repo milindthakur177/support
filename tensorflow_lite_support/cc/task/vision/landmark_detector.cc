@@ -85,7 +85,7 @@ absl::Status SanityCheckOutputTensors() {
     return CreateStatusWithPayload(
         StatusCode::kInternal,
         absl::StrFormat("Expected 1 output tensors, found %d",
-                        output_tensors.size()));
+                        TfLiteEngine::OutputCount(interpreter)));
   }
   return absl::OkStatus();
 }
