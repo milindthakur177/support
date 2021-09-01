@@ -114,7 +114,7 @@ class LandmarkDetector : public BaseVisionTaskApi<LandmarkResult> {
 
 private:
   // Performs sanity checks on the model outputs and extracts their metadata.
-   absl::Status SanityCheckOutputs();
+  absl::Status SanityCheckOutputTensors();
 };
 
 }  // namespace vision

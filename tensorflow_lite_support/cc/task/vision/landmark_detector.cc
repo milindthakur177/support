@@ -79,7 +79,7 @@ absl::Status LandmarkDetector::SanityCheckOptions(
   return absl::OkStatus();
 }
 /* static */
-absl::Status LandmarkDetector::SanityCheckOutputs() {
+absl::Status LandmarkDetector::SanityCheckOutputTensors() {
   // First, sanity checks on the model itself.
   const TfLiteEngine::Interpreter* interpreter = engine_->interpreter();
   // Check the number of output tensors.
@@ -105,7 +105,7 @@ absl::Status LandmarkDetector::Init(
   RETURN_IF_ERROR(CheckAndSetInputs());
 
   // Sanity check for output_tensors.
-  RETURN_IF_ERROR(SanityCheckOutputs());
+  RETURN_IF_ERROR(SanityCheckOutputTensors());
 
   return absl::OkStatus();
 }
