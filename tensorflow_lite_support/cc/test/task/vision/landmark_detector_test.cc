@@ -117,12 +117,9 @@ TEST_F(DetectTest, SucceedsWithFloatModel) {
       std::unique_ptr<LandmarkDetector> landmark_detector,
       LandmarkDetector::CreateFromOptions(options));
 
-  StatusOr<LandmarkResult> result_or = 
-    landmark_detector->Detect(*frame_buffer);
+  SUPPORT_ASSERT_OK_AND_ASSIGN(LandmarkResult result, 
+  		landmark_detector->Detect(*frame_buffer));
   ImageDataFree(&rgb_image);
-  SUPPORT_ASSERT_OK(result_or);
-
-  const LandmarkResult& result = result_or.value();
 
   for (int i = 0; i < num_keypoints; ++i) {
     EXPECT_NEAR(result.landmarks(i).position(0), GOLDEN_KEY_Y[i], 0.025);
