@@ -79,14 +79,14 @@ absl::Status LandmarkDetector::SanityCheckOptions(
   return absl::OkStatus();
 }
 /* static */
-absl::Status SanityCheckOutputs() {
+absl::Status LandmarkDetector::CheckAndSetOutputs() {
   // First, sanity checks on the model itself.
   const TfLiteEngine::Interpreter* interpreter = engine_->interpreter();
   // Check the number of output tensors.
   if (TfLiteEngine::OutputCount(interpreter) != 1) {
     return CreateStatusWithPayload(
         StatusCode::kInvalidArgument,
-        absl::StrFormat("Mobile SSD models are expected to have exactly 4 "
+        absl::StrFormat("Mobile SSD models are expected to have exactly 1 "
                         "outputs, found %d",
                         TfLiteEngine::OutputCount(interpreter)),
         TfLiteSupportStatus::kInvalidNumOutputTensorsError);
