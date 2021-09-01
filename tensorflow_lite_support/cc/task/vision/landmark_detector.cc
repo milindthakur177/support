@@ -80,12 +80,11 @@ absl::Status LandmarkDetector::SanityCheckOptions(
 }
 /* static */
 absl::Status SanityCheckOutputTensors() {
-  const TfLiteEngine::Interpreter* interpreter = engine_->interpreter();
-  if (TfLiteEngine::OutputCount(interpreter) != 1) {
+  if (TfLiteEngine::OutputCount(engine_->interpreter()) != 1) {
     return CreateStatusWithPayload(
         StatusCode::kInternal,
         absl::StrFormat("Expected 1 output tensors, found %d",
-                        TfLiteEngine::OutputCount(interpreter)));
+                        TfLiteEngine::OutputCount(engine_->interpreter())));
   }
   return absl::OkStatus();
 }
