@@ -86,7 +86,7 @@ absl::Status LandmarkDetector::SanityCheckOutputTensors() {
   if (TfLiteEngine::OutputCount(interpreter) != 1) {
     return CreateStatusWithPayload(
         StatusCode::kInternal,
-        absl::StrFormat("Expected 1 output tensors, found %d",
+        absl::StrFormat("Expected 1 output tensor, found %d",
                         TfLiteEngine::OutputCount(interpreter)));
   }
   return absl::OkStatus();
