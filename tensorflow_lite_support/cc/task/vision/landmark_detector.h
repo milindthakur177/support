@@ -19,10 +19,7 @@ limitations under the License.
 #include <memory>
 #include <vector>
 
-#include "absl/container/flat_hash_set.h"
 #include "absl/status/status.h"
-#include "tensorflow/lite/c/common.h"
-#include "tensorflow/lite/core/api/op_resolver.h"
 #include "tensorflow/lite/core/shims/cc/kernels/register.h"
 #include "tensorflow_lite_support/cc/port/integral_types.h"
 #include "tensorflow_lite_support/cc/port/statusor.h"
@@ -113,7 +110,7 @@ class LandmarkDetector : public BaseVisionTaskApi<LandmarkResult> {
   virtual absl::Status PreInit();
 
 private:
-  // Performs sanity checks on the model outputs and extracts their metadata.
+  // Performs sanity checks on the model output tensors.
   absl::Status SanityCheckOutputTensors();
 };
 

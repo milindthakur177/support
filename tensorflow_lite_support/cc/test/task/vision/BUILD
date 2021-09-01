@@ -201,9 +201,5 @@ cc_test_with_tflite(
         "//tensorflow_lite_support/examples/task/vision/desktop/utils:image_utils",
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/status",
-        "@com_google_absl//absl/strings:cord",
-        "@org_tensorflow//tensorflow/lite:framework",
-        "@org_tensorflow//tensorflow/lite/c:common",
-        "@org_tensorflow//tensorflow/lite/kernels:builtin_ops",
     ],
 )
