@@ -108,9 +108,7 @@ class LandmarkDetector : public BaseVisionTaskApi<LandmarkResult> {
 
   // Performs pre-initialization actions.
   virtual absl::Status PreInit();
-
-private:
-  // Performs sanity checks on the model output tensors.
+  
   absl::Status SanityCheckOutputTensors();
 };
 
