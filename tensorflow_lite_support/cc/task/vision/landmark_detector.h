@@ -30,6 +30,7 @@ limitations under the License.
 #include "tensorflow_lite_support/cc/task/vision/core/frame_buffer.h"
 #include "tensorflow_lite_support/cc/task/vision/proto/landmark_detector_options_proto_inc.h"
 #include "tensorflow_lite_support/cc/task/vision/proto/landmarks_proto_inc.h"
+#include "tensorflow_lite_support/cc/task/core/tflite_engine.h"
 
 namespace tflite {
 namespace task {
