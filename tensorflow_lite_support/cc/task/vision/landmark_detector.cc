@@ -79,12 +79,17 @@ absl::Status LandmarkDetector::SanityCheckOptions(
   return absl::OkStatus();
 }
 /* static */
-absl::Status SanityCheckOutputTensors() {
-  if (TfLiteEngine::OutputCount(engine_->interpreter()) != 1) {
+absl::Status LandmarkDetector::SanityCheckOutputs() {
+  // First, sanity checks on the model itself.
+  const TfLiteEngine::Interpreter* interpreter = engine_->interpreter();
+  // Check the number of output tensors.
+  if (TfLiteEngine::OutputCount(interpreter) != 1) {
     return CreateStatusWithPayload(
-        StatusCode::kInternal,
-        absl::StrFormat("Expected 1 output tensors, found %d",
-                        TfLiteEngine::OutputCount(engine_->interpreter())));
+        StatusCode::kInvalidArgument,
+        absl::StrFormat("Mobile SSD models are expected to have exactly 1 "
+                        "outputs, found %d",
+                        TfLiteEngine::OutputCount(interpreter)),
+        TfLiteSupportStatus::kInvalidNumOutputTensorsError);
   }
   return absl::OkStatus();
 }
@@ -102,7 +107,7 @@ absl::Status LandmarkDetector::Init(
   RETURN_IF_ERROR(CheckAndSetInputs());
 
   // Sanity check for output_tensors.
-  RETURN_IF_ERROR(SanityCheckOutputTensors());
+  RETURN_IF_ERROR(SanityCheckOutputs());
 
   return absl::OkStatus();
 }
