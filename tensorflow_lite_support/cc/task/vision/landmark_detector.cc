@@ -79,9 +79,9 @@ absl::Status LandmarkDetector::SanityCheckOptions(
   return absl::OkStatus();
 }
 /* static */
-absl::Status SanityCheckOutputTensors(
-    const std::vector<const TfLiteTensor*>& output_tensors) {
-  if (output_tensors.size() != 1) {
+absl::Status SanityCheckOutputTensors() {
+  const TfLiteEngine::Interpreter* interpreter = engine_->interpreter();
+  if ((TfLiteEngine::OutputCount(interpreter) != 1) {
     return CreateStatusWithPayload(
         StatusCode::kInternal,
         absl::StrFormat("Expected 1 output tensors, found %d",
@@ -101,6 +101,9 @@ absl::Status LandmarkDetector::Init(
 
   // Sanity check and set inputs and outputs.
   RETURN_IF_ERROR(CheckAndSetInputs());
+
+  // Sanity check for output_tensors.
+  RETURN_IF_ERROR(SanityCheckOutputTensors());
 
   return absl::OkStatus();
 }
@@ -126,27 +129,23 @@ StatusOr<LandmarkResult> LandmarkDetector::Detect(
 StatusOr<LandmarkResult> LandmarkDetector::Postprocess(
     const std::vector<const TfLiteTensor*>& output_tensors,
     const FrameBuffer& /*frame_buffer*/, const BoundingBox& /*roi*/) {
-  // Most of the checks here should never happen, as outputs have been validated
-  // at construction time. Checking nonetheless and returning internal errors if
-  // something bad happens.
-  RETURN_IF_ERROR(SanityCheckOutputTensors(output_tensors));
 
   // Get number of keypoints.
-  const int num_keypoints = output_tensors[0]->dims->data[2];
-  const float* outputs = AssertAndReturnTypedTensor<float>(output_tensors[0]);
+  const int NUM_KEYPOINTS = output_tensors[0]->dims->data[2];
+  const float* OUTPUTS = AssertAndReturnTypedTensor<float>(output_tensors[0]);
 
   LandmarkResult result;
 
-  for (int i = 0; i < num_keypoints; ++i) {
+  for (int i = 0; i < NUM_KEYPOINTS; ++i) {
     Landmark* landmarks = result.add_landmarks();
     // Set Scores
-    landmarks->set_score(outputs[3 * i + 2]);
+    landmarks->set_score(OUTPUTS[3 * i + 2]);
     // Set y coordinates
     landmarks->add_position(0);
-    landmarks->set_position(0, outputs[3 * i + 0]);
+    landmarks->set_position(0, OUTPUTS[3 * i + 0]);
     // Set x coordinates
     landmarks->add_position(1);
-    landmarks->set_position(1, outputs[3 * i + 1]);
+    landmarks->set_position(1, OUTPUTS[3 * i + 1]);
   }
 
   return result;
