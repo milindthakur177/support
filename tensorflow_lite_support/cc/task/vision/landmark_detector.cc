@@ -57,8 +57,8 @@ StatusOr<std::unique_ptr<LandmarkDetector>> LandmarkDetector::CreateFromOptions(
   std::unique_ptr<LandmarkDetector> landmark_detector;
   if (options_copy->base_options().has_model_file()) {
     ASSIGN_OR_RETURN(auto landmark_detector,
-                     TaskAPIFactory::CreateFromBaseOptions<LandmarkDetector>(
-                         &options_copy->base_options()));
+                    TaskAPIFactory::CreateFromBaseOptions<LandmarkDetector>(
+                        &options_copy->base_options()));
   }
   RETURN_IF_ERROR(landmark_detector->Init(std::move(options_copy)));
 
